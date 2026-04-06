@@ -1,0 +1,5 @@
+*.o
+*.out
+app_name
+profiling/vystup.*
+.DS_Store
