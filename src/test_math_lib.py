@@ -112,7 +112,7 @@ class TestMultiplication(unittest.TestCase):
             
         with self.assertRaises(TypeError):
             mul("A", "B")
-
+            
         # Null/None values
         with self.assertRaises(TypeError):
             mul(None, 5)
@@ -156,7 +156,100 @@ class TestDivision(unittest.TestCase):
         # Null/None values
         with self.assertRaises(TypeError):
             div(None, 5)
+            
+class TestFactorial(unittest.TestCase):
+
+    # Standard tests
+    def test_standard_factorial(self):
+        self.assertEqual(factorial(1), 1)
+        self.assertEqual(factorial(2), 2)
+        self.assertEqual(factorial(5), 120)       
+        self.assertEqual(factorial(10), 3628800)
+
+    
+    def test_zero_factorial(self):
+        #0! == 1
+        self.assertEqual(factorial(0), 1)
+
+    # Error check
+    def test_negative_numbers(self):
+        # Factorials are  only for non-negative integers. 
         
+        with self.assertRaises(ValueError):
+            factorial(-5)
+
+    def test_floats_and_decimals(self):
+        # Standard factorials do not apply to fractions/decimals.
+        with self.assertRaises(ValueError):
+            factorial(3.5)
+
+class TestPower(unittest.TestCase):
+
+    # Standard tests
+    def test_standard_power(self):
+        self.assertEqual(power(2, 3), 8)           # 2^3 = 8
+        self.assertEqual(power(5, 2), 25)          # 5^2 = 25
+        self.assertEqual(power(10, 4), 10000)      # 10^4 = 10000
+        self.assertEqual(power(2, 1), 2)           # Power of 1 returns the base
+
+    # Negative Base
+    def test_negative_bases(self):
+        # A negative base to an even power becomes positive
+        self.assertEqual(power(-3, 2), 9)          
+        # A negative base to an odd power stays negative
+        self.assertEqual(power(-3, 3), -27)        
+    
+        # Zero-cases
+    def test_zero_exponent(self):
+        # Anything to the power of 0 is 1
+        self.assertEqual(power(5, 0), 1)
+        self.assertEqual(power(-10, 0), 1)
+        self.assertEqual(power(0, 0), 1)         
+        
+    def test_zero_base(self):
+        # 0 to any positive power is 0
+        self.assertEqual(power(0, 5), 0)
+
+    # --- 4. Domain Errors (The "Natural Exponents Only" Rule) ---
+    def test_negative_exponents(self):
+        with self.assertRaises(ValueError):
+            power(2, -2)
+
+    def test_float_exponents(self):
+        # 2.5 is not a natural number.
+        with self.assertRaises(ValueError):
+            power(4, 2.5)
+
+    # Invalid Types
+    def test_invalid_types(self):
+        # Proves _validate_numbers is working
+        with self.assertRaises(TypeError):
+            power("two", 3)
+        with self.assertRaises(TypeError):
+            power(2, None)
+            
+class TestSquare(unittest.TestCase):
+
+    # Standard tests
+    def test_standard_square(self):
+        self.assertEqual(square(4), 16)
+        self.assertEqual(square(10), 100)
+        
+    # Negative numbers
+    def test_negative_square(self):
+        # A negative times a negative is always positive
+        self.assertEqual(square(-5), 25)
+        self.assertEqual(square(-1), 1)
+
+    def test_zero_square(self):
+        self.assertEqual(square(0), 0)
+
+    # floats
+    def test_float_square(self):
+        self.assertAlmostEqual(square(1.5), 2.25)
+        self.assertAlmostEqual(square(-2.5), 6.25)
+
+
 class TestMathLib(unittest.TestCase):
     def test_add(self):
         self.assertEqual(add(2,2),4)
