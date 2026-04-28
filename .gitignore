@@ -3,3 +3,4 @@
 app_name
 profiling/vystup.*
 .DS_Store
+__pycache__/
