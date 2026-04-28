@@ -1,4 +1,5 @@
 import customtkinter as ctk
+import math_lib
 
 ctk.set_appearance_mode('system')
 ctk.set_default_color_theme('green')
@@ -60,9 +61,35 @@ button = ctk.CTkButton(app, text="^", command=button_power)
 button.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
 
 def button_equals():
-    display.configure(state="normal")
-    display.insert("end", "=")
-    display.configure(state="readonly")
+    expression = display.get()
+    try:
+        if "+" in expression:
+            numbers = expression.split("+")
+            result = math_lib.add(float(numbers[0]), float(numbers[1]))
+
+        elif "-" in expression:
+            numbers = expression.split("-")
+            result = math_lib.sub(float(numbers[0]), float(numbers[1]))
+
+        elif "*" in expression:
+            numbers = expression.split("*")
+            result = math_lib.mul(float(numbers[0]), float(numbers[1]))
+
+        elif "/" in expression:
+            numbers = expression.split("/")
+            result = math_lib.div(float(numbers[0]), float(numbers[1]))
+
+        display.configure(state="normal")
+        display.delete(0, "end")
+        display.insert("end", str(result))
+        display.configure(state="readonly")
+
+    except Exception:
+        display.configure(state="normal")
+        display.delete(0,"end")
+        display.insert("end", "Error")
+        display.configure(state="readonly")
+
 
 
 button = ctk.CTkButton(app, text="=", command=button_equals)
@@ -87,8 +114,11 @@ button = ctk.CTkButton(app, text="-", command=button_sub)
 button.grid(row=4, column=3, padx=10, pady=10, sticky="nsew")
 
 def button_rm():
-    display.configure(state="normal")
-    display.insert("end", "RM")
+    current_text = display.get()
+    if len(current_text) > 0:
+        display.configure(state="normal")
+   
+    display.delete(len(current_text) - 1, "end")
     display.configure(state="readonly")
 
 
@@ -107,16 +137,16 @@ button.grid(row=2, column=3, padx=10, pady=10, sticky="nsew")
 
 def button_mul():
     display.configure(state="normal")
-    display.insert("end", "x")
+    display.insert("end", "*")
     display.configure(state="readonly")
 
-button = ctk.CTkButton(app, text="x", command=button_mul)
+button = ctk.CTkButton(app, text="*", command=button_mul)
 button.grid(row=3, column=3, padx=10, pady=10, sticky="nsew")
 
 
 def button_ac():
     display.configure(state="normal")
-    display.insert("end", "AC")
+    display.delete(0, "end")
     display.configure(state="readonly")
 
 button = ctk.CTkButton(app, text="AC", command=button_ac)
