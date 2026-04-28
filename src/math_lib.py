@@ -55,9 +55,9 @@ def power(base, exponent):
     if exponent == 0:
         return 1
     
-    
     counter = 1
     result = base
+    
     for counter in range(1,exponent):
         result *= base
        
