@@ -17,7 +17,7 @@ class TestAddition(unittest.TestCase):
 
   
     def test_boundaries_and_limits(self):
-        self.assertAlmostEqual(add(0.1, 0.2), 0.3, places=7)
+        self.assertEqual(add(0.1, 0.2), 0.3)
    
     def test_invalid_inputs(self):
         # Missing Argument 
@@ -74,8 +74,8 @@ class TestSubtraction(unittest.TestCase):
             sub(None, 5)
             
     def test_subtraction_floats(self):
-    
-        self.assertAlmostEqual(sub(0.3, 0.2), 0.1, places=7)
+        
+        self.assertEqual(sub(0.3, 0.2), 0.1)
         
     def test_subtraction_properties(self):
         a, b = 15, 8
@@ -141,7 +141,7 @@ class TestDivision(unittest.TestCase):
 
     def test_division_floats(self):
         
-        self.assertAlmostEqual(div(1, 3), 0.3333333, places=7)
+        self.assertEqual(div(1, 3), 0.333333333)
         
     def test_invalid_inputs(self):
         with self.assertRaises(TypeError):
@@ -255,17 +255,17 @@ class TestSquare(unittest.TestCase):
 
     # floats
     def test_float_square(self):
-        self.assertAlmostEqual(square(1.5), 2.25)
-        self.assertAlmostEqual(square(-2.5), 6.25)
+        self.assertEqual(square(1.5), 2.25)
+        self.assertEqual(square(-2.5), 6.25)
 
 class TestRoot(unittest.TestCase):
 
     # standard tests
     def test_standard_roots(self):
-        self.assertAlmostEqual(root(9, 2), 3.0, places=8)      # Square root
-        self.assertAlmostEqual(root(27, 3), 3.0, places=8)     # Cube root
-        self.assertAlmostEqual(root(16, 4), 2.0, places=8)     # 4th root
-        self.assertAlmostEqual(root(32, 5), 2.0, places=8)     # 5th root
+        self.assertEqual(root(9, 2), 3.0, )      # Square root
+        self.assertEqual(root(27, 3), 3.0, )     # Cube root
+        self.assertEqual(root(16, 4), 2.0, )     # 4th root
+        self.assertEqual(root(32, 5), 2.0, )     # 5th root
 
     def test_zero_and_one_base(self):
         self.assertEqual(root(0, 5), 0)            # Any root of 0 is 0
@@ -287,7 +287,7 @@ class TestRoot(unittest.TestCase):
     #  The "Odd Root of a Negative" Case
     def test_odd_root_of_negative(self):
     
-        self.assertAlmostEqual(root(-27, 3), -3.0, places=8)
+        self.assertEqual(root(-27, 3), -3.0,)
 
     #  Invalid Types
     def test_invalid_types(self):
@@ -298,11 +298,11 @@ class TestRoot(unittest.TestCase):
 class TestSqrt(unittest.TestCase):
 
     def test_standard_sqrt(self):
-        self.assertAlmostEqual(sqrt(25), 5.0, places=8)
-        self.assertAlmostEqual(sqrt(144), 12.0, places=8)
+        self.assertEqual(sqrt(25), 5.0, )
+        self.assertEqual(sqrt(144), 12.0,)
         
     def test_float_sqrt(self):
-        self.assertAlmostEqual(sqrt(2.25), 1.5, places=8)
+        self.assertEqual(sqrt(2.25), 1.5)
 
     def test_zero_sqrt(self):
         self.assertEqual(sqrt(0), 0)
@@ -367,7 +367,7 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(power(2, 3), 8)
 
     def test_root(self):
-        self.assertAlmostEqual(root(27,3), 3, 7)
+        self.assertEqual(root(27,3), 3, 7)
 
     def test_square(self):
         self.assertEqual(square(4), 16)
