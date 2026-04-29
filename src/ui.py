@@ -4,6 +4,7 @@ import math_lib
 ctk.set_appearance_mode('system')
 ctk.set_default_color_theme('green')
 
+
 def can_add_operator():
     text = display.get()
 
@@ -36,9 +37,38 @@ app.title("Calculator")
 app.geometry("650x1000")
 app.resizable(True, True)
 
-
 display = ctk.CTkEntry(app, placeholder_text="0", justify="right", state="readonly")
 display.grid(row=0, column=0, columnspan=4, rowspan=1, padx=10, pady=10, sticky="nsew")
+
+def key_pressed(event):
+    char = event.char
+    keysym = event.keysym
+
+    if char == '1' : button1()
+    elif char == '2' : button2()
+    elif char == '3' : button3()
+    elif char == '4' : button4()
+    elif char == '5' : button5()
+    elif char == '6' : button6()
+    elif char == '7' : button7()
+    elif char == '8' : button8()
+    elif char == '9' : button9()
+    elif char == '0' : button0()
+
+    elif char == '+': button_add()
+    elif char == '-': button_sub()
+    elif char == '*': button_mul()
+    elif char == '/': button_div()
+    elif char == '!': button_power()
+    elif char == '.' or char == ',': button_point()
+
+    elif keysym == 'Return' or keysym == 'KP_Enter' or char == '=': button_equals()
+    elif keysym == 'BackSpace': button_rm()
+    elif keysym == 'Escape': button_ac()
+    
+app.bind('<Key>', key_pressed)
+
+
 
 def button_equals():
     expression = display.get()
