@@ -112,7 +112,7 @@ class TestMultiplication(unittest.TestCase):
             
         with self.assertRaises(TypeError):
             mul("A", "B")
-
+            
         # Null/None values
         with self.assertRaises(TypeError):
             mul(None, 5)
@@ -156,7 +156,197 @@ class TestDivision(unittest.TestCase):
         # Null/None values
         with self.assertRaises(TypeError):
             div(None, 5)
+            
+class TestFactorial(unittest.TestCase):
+
+    # Standard tests
+    def test_standard_factorial(self):
+        self.assertEqual(factorial(1), 1)
+        self.assertEqual(factorial(2), 2)
+        self.assertEqual(factorial(5), 120)       
+        self.assertEqual(factorial(10), 3628800)
         
+    
+    def test_zero_factorial(self):
+        #0! == 1
+        self.assertEqual(factorial(0), 1)
+
+    # Error check
+    def test_negative_numbers(self):
+        # Factorials are  only for non-negative integers. 
+        
+        with self.assertRaises(ValueError):
+            factorial(-5)
+
+    def test_floats_and_decimals(self):
+        # Standard factorials do not apply to fractions/decimals.
+        with self.assertRaises(ValueError):
+            factorial(3.5)
+            
+    def test_overflow_threshold(self):
+        
+        self.assertTrue(factorial(64), 126886932185884164103433389335161480802865516174545192198801894375214704230400000000000000)
+        self.assertGreater(factorial (MAX_FACTORIAL) , 0)
+        # checking the overflow limit for safety
+        with self.assertRaises(OverflowError):
+            factorial(1001)
+            
+            
+class TestPower(unittest.TestCase):
+
+    # Standard tests
+    def test_standard_power(self):
+        self.assertEqual(power(2, 3), 8)           # 2^3 = 8
+        self.assertEqual(power(5, 2), 25)          # 5^2 = 25
+        self.assertEqual(power(10, 4), 10000)      # 10^4 = 10000
+        self.assertEqual(power(2, 1), 2)           # Power of 1 returns the base
+
+    # Negative Bases
+    def test_negative_bases(self):
+        # A negative base to an even power becomes positive
+        self.assertEqual(power(-3, 2), 9)          
+        # A negative base to an odd power stays negative
+        self.assertEqual(power(-3, 3), -27)        
+    
+        # Zero cases
+    def test_zero_exponent(self):
+        # Anything to the power of 0 is 1
+        self.assertEqual(power(5, 0), 1)
+        self.assertEqual(power(-10, 0), 1)
+        self.assertEqual(power(0, 0), 1)         
+        
+    def test_zero_base(self):
+        # 0 to any positive power is 0
+        self.assertEqual(power(0, 5), 0)
+
+    # Errors check (The "Natural Exponents Only" Rule)
+    def test_negative_exponents(self):
+        with self.assertRaises(ValueError):
+            power(2, -2)
+
+    def test_float_exponents(self):
+        # 2.5 is not a natural number.
+        with self.assertRaises(ValueError):
+            power(4, 2.5)
+
+    # Invalid Types
+    def test_invalid_types(self):
+        # Proves _validate_numbers is working
+        with self.assertRaises(TypeError):
+            power("two", 3)
+        with self.assertRaises(TypeError):
+            power(2, None)
+            
+class TestSquare(unittest.TestCase):
+
+    # Standard tests
+    def test_standard_square(self):
+        self.assertEqual(square(4), 16)
+        self.assertEqual(square(10), 100)
+        
+    # Negative numbers
+    def test_negative_square(self):
+        # A negative times a negative is always positive
+        self.assertEqual(square(-5), 25)
+        self.assertEqual(square(-1), 1)
+
+    def test_zero_square(self):
+        self.assertEqual(square(0), 0)
+
+    # floats
+    def test_float_square(self):
+        self.assertAlmostEqual(square(1.5), 2.25)
+        self.assertAlmostEqual(square(-2.5), 6.25)
+
+class TestRoot(unittest.TestCase):
+
+    # standard tests
+    def test_standard_roots(self):
+        self.assertAlmostEqual(root(9, 2), 3.0, places=8)      # Square root
+        self.assertAlmostEqual(root(27, 3), 3.0, places=8)     # Cube root
+        self.assertAlmostEqual(root(16, 4), 2.0, places=8)     # 4th root
+        self.assertAlmostEqual(root(32, 5), 2.0, places=8)     # 5th root
+
+    def test_zero_and_one_base(self):
+        self.assertEqual(root(0, 5), 0)            # Any root of 0 is 0
+        self.assertEqual(root(1, 5), 1)            # Any root of 1 is 1
+
+    # Invalid math
+    def test_zero_degree(self):
+        # The 0th root of a number is mathematically undefined
+        with self.assertRaises(ValueError):
+            root(25, 0)
+
+    def test_even_root_of_negative(self):
+        # In real numbers, you cannot take an even root (like a square root) of a negative number.
+        with self.assertRaises(ValueError):
+            root(-16, 2)
+        with self.assertRaises(ValueError):
+            root(-81, 4)
+
+    #  The "Odd Root of a Negative" Case
+    def test_odd_root_of_negative(self):
+    
+        self.assertAlmostEqual(root(-27, 3), -3.0, places=8)
+
+    #  Invalid Types
+    def test_invalid_types(self):
+        with self.assertRaises(TypeError):
+            root("nine", 2)
+
+
+class TestSqrt(unittest.TestCase):
+
+    def test_standard_sqrt(self):
+        self.assertAlmostEqual(sqrt(25), 5.0, places=8)
+        self.assertAlmostEqual(sqrt(144), 12.0, places=8)
+        
+    def test_float_sqrt(self):
+        self.assertAlmostEqual(sqrt(2.25), 1.5, places=8)
+
+    def test_zero_sqrt(self):
+        self.assertEqual(sqrt(0), 0)
+
+    def test_negative_sqrt(self):
+        # Square root is an even root (degree 2), so negatives must be blocked
+        with self.assertRaises(ValueError):
+            sqrt(-4)
+
+    def test_invalid_types(self):
+        with self.assertRaises(TypeError):
+            sqrt(None)
+
+
+class TestInverse(unittest.TestCase):
+
+    # 1. Standard tests
+    def test_standard_inverse(self):
+        self.assertEqual(inverse(2), 0.5)          # 1 / 2
+        self.assertEqual(inverse(4), 0.25)         # 1 / 4
+        self.assertEqual(inverse(10), 0.1)         # 1 / 10
+
+    # 2. Negative Numbers
+    def test_negative_inverse(self):
+        self.assertEqual(inverse(-2), -0.5)        # 1 / -2
+        self.assertEqual(inverse(-4), -0.25)
+
+    # 3. Decimal/Float Inputs
+    def test_float_inverse(self):
+        self.assertEqual(inverse(0.5), 2.0)        # 1 / 0.5 = 2
+        self.assertEqual(inverse(0.25), 4.0)       # 1 / 0.25 = 4
+
+    # 4. The Zero Case 
+    def test_zero_inverse(self):
+        # The inverse of 0 is mathematically undefined (1 / 0). 
+        # Your function MUST catch this and raise a ZeroDivisionError.
+        with self.assertRaises(ZeroDivisionError):
+            inverse(0)
+
+    # 5. Invalid Types
+    def test_invalid_types(self):
+        with self.assertRaises(TypeError):
+            inverse("text")
+    
 class TestMathLib(unittest.TestCase):
     def test_add(self):
         self.assertEqual(add(2,2),4)
@@ -177,7 +367,7 @@ class TestMathLib(unittest.TestCase):
         self.assertEqual(power(2, 3), 8)
 
     def test_root(self):
-        self.assertEqual(root(27, 3), 3)
+        self.assertAlmostEqual(root(27,3), 3, 7)
 
     def test_square(self):
         self.assertEqual(square(4), 16)

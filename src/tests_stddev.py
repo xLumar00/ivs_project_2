@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import unittest
 from stddev import stddev_calc
-#TODO imports for data handling test suite
 
 class TestStandardDeviationMath(unittest.TestCase):
 
@@ -89,9 +88,6 @@ class TestStandardDeviationMath(unittest.TestCase):
         # Expected 0.0
         result = stddev_calc(11, 0, 0)
         self.assertEqual(result, 0.0)
-
-
-#TODO data handling test suite (its own class)
 
 if __name__ == "__main__":
     unittest.main()
