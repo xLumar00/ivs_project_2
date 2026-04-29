@@ -43,21 +43,20 @@ display.grid(row=0, column=0, columnspan=4, rowspan=1, padx=10, pady=10, sticky=
 def button_equals():
     expression = display.get()
     try:
+        expression = expression.replace("--", "+")
+        expression = expression.replace("+-", "-")
+
         if "+" in expression:
             numbers = expression.split("+")
             result = math_lib.add(float(numbers[0]), float(numbers[1]))
 
         elif "-" in expression:
-            numbers = expression.split("-")
+            numbers = expression.rsplit("-", 1)
             result = math_lib.sub(float(numbers[0]), float(numbers[1]))
 
         elif "*" in expression:
             numbers = expression.split("*")
             result = math_lib.mul(float(numbers[0]), float(numbers[1]))
-
-        elif "!" in expression:
-            numbers = expression.split("!")
-            result = math_lib.factorial(int(numbers[0]))
 
         elif "^2" in expression:
             numbers = expression.split("^2")
@@ -71,17 +70,12 @@ def button_equals():
             numbers = expression.split("rt")
             result = math_lib.root(float(numbers[0]), float(numbers[1]))
 
-        elif "sq" in expression:
-            numbers = expression.split("sq")
-            result = math_lib.sqrt(int(numbers[0]))
-
-        elif "1/x" in expression:
-            numbers = expression.split("1/x")
-            result = math_lib.inverse(float(numbers[0]))
-
         elif "/" in expression:
             numbers = expression.split("/")
             result = math_lib.div(float(numbers[0]), float(numbers[1]))
+        
+        else:
+            result = expression
         
         display.configure(state="normal")
         display.delete(0, "end")
@@ -99,33 +93,83 @@ button.grid(row=6, column=3, padx=10, pady=10, sticky="nsew")
 
 
 def button_inverse():
-    auto_compute()
-    if can_add_operator() == True:
-        display.configure(state="normal")
-        display.insert("end", "1/x")
-        display.configure(state="readonly")
+    text = display.get()
+    if text == "":
+        return
+    
+    last_number = text
+    for operator in ["+", "-", "*", "/", "^", "rt"]:
+        if operator in last_number:
+            last_number = last_number.split(operator)[-1]
+
+    if last_number != "":
+        try:
+            number = float(last_number)
+            result = math_lib.inverse(number)
+
+            new_text = text[:-len(last_number)] + str(result)
+
+            display.configure(state="normal")
+            display.delete(0, "end")
+            display.insert("end", new_text)
+            display.configure(state="readonly")
+        except Exception:
+            pass
 
 button = ctk.CTkButton(app, text="1/x", command=button_inverse)
 button.grid(row=2, column=2, padx=10, pady=10, sticky="nsew")
 
 
 def button_sq():
-    auto_compute()
-    if can_add_operator() == True:
-        display.configure(state="normal")
-        display.insert("end", "sq")
-        display.configure(state="readonly")
+    text = display.get()
+    if text == "":
+        return
+    
+    last_number = text
+    for operator in ["+", "-", "*", "/", "^", "rt"]:
+        if operator in last_number:
+            last_number = last_number.split(operator)[-1]
+
+    if last_number != "":
+        try:
+            number = float(last_number)
+            result = math_lib.sqrt(number)
+
+            new_text = text[:-len(last_number)] + str(result)
+
+            display.configure(state="normal")
+            display.delete(0, "end")
+            display.insert("end", new_text)
+            display.configure(state="readonly")
+        except Exception:
+            pass
 
 button = ctk.CTkButton(app, text="sq", command=button_sq)
 button.grid(row=2, column=1, padx=10, pady=10, sticky="nsew")
 
 
 def button_square():
-    auto_compute()
-    if can_add_operator() == True:
-        display.configure(state="normal")
-        display.insert("end", "^2")
-        display.configure(state="readonly")
+    text = display.get()
+    if text == "":
+        return
+    
+    last_number = text
+    for operator in ["+", "-", "*", "/", "^", "rt"]:
+        if operator in last_number:
+            last_number = last_number.split(operator)[-1]
+
+    if last_number != "":
+        try:
+            number = float(last_number)
+            result = math_lib.square(number)
+
+            new_text = text[:-len(last_number)] + str(result)
+            display.configure(state="normal")
+            display.delete(0, "end")
+            display.insert("end", new_text)
+            display.configure(state="readonly")
+        except Exception:
+            pass
 
 button = ctk.CTkButton(app, text="^2", command=button_square)
 button.grid(row=1, column=1, padx=10, pady=10, sticky="nsew")
@@ -166,7 +210,20 @@ button.grid(row=5, column=3, padx=10, pady=10, sticky="nsew")
 
 def button_sub():
     auto_compute()
-    if can_add_operator() == True:
+    text = display.get()
+
+    if text == "":
+        display.configure(state="normal")
+        display.insert("end", "-")
+        display.configure(state="readonly")
+    
+    elif text.endswith(("+", "-", "*", "/", "^", "rt", "sq", "sqrt", "1/x")):
+        if not text.endswith("--"):
+            display.configure(state="normal")
+            display.insert("end", "-")
+            display.configure(state="readonly")
+    
+    elif can_add_operator() == True:
         display.configure(state="normal")
         display.insert("end", "-")
         display.configure(state="readonly")
@@ -249,7 +306,7 @@ button.grid(row=6, column=0, padx=10, pady=10, sticky="nsew")
 def button_point():
     current_text = display.get()
     last_number = current_text
-    for operator in ["+", "-", "*", "/"]:
+    for operator in ["+", "-", "*", "/", "^", "rt"]:
         if operator in last_number:
             last_number = last_number.split(operator)[-1]
     
