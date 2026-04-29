@@ -29,7 +29,7 @@ def main():
                 continue
             else:
                 sum_of_numbers += number
-                sum_of_squares += math_lib.square(number, 2)
+                sum_of_squares += math_lib.square(number)
                 count += 1
 
     result = stddev_calc(count, sum_of_numbers, sum_of_squares)
