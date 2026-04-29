@@ -152,4 +152,3 @@ def inverse(x):
         raise ZeroDivisionError
     
     return 1/x
-print(factorial(64))
