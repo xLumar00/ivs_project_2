@@ -7,10 +7,12 @@ LOGIN = xluptam00_xlukott00_xheldim00_xvojtat00
 #========================================
 #Directories
 #========================================
-SRC = src
-MAIN = $(SRC)/main.py
-TESTS = $(SRC)/tests.py
-
+MAIN = main.py
+TESTS = test_math_lib.py
+STDDEV = stddev.py
+ROOT = ..
+DOC_OUT = $(ROOT)/doc
+INSTALL_SRC = $(ROOT)/install
 #========================================
 .PHONY: all run test doc clean pack help stddev install uninstall
 
@@ -18,7 +20,7 @@ TESTS = $(SRC)/tests.py
 #Default commands
 #========================================
 all:
-	pip install -r requirements.txt
+	$(PYTHON) -m pip install -r $(ROOT)/requirements.txt
 
 #========================================
 run:
@@ -30,39 +32,44 @@ test:
 
 #========================================
 doc:
-	doxygen Doxyfile
+	cd $(ROOT) && doxygen src/Doxyfile
 
 #========================================
 stddev:
-	$(PYTHON) profiling/stddev_numgenerator.py | $(PYTHON) $(SRC)/stddev.py
+	$(PYTHON) stddev_num_generator.py | $(PYTHON) $(STDDEV)
 
 #========================================
 clean:
 	rm -rf __pycache__
 	rm -rf $(SRC)/__pycache__
-	rm -rf doc
-	rm -rf $(LOGIN).zip
+	rm -rf $(ROOT)/doc
+	rm -rf $(ROOT)/$(LOGIN).zip
+	rm -rf $(ROOT)/$(LOGIN)
 
 #========================================
 #Packing
 #========================================
 pack: clean doc
-	mkdir -p $(LOGIN)/repo
-	mkdir -p $(LOGIN)/doc
-	mkdir -p $(LOGIN)/install
+	#Structure creation
+	mkdir -p $(ROOT)/$(LOGIN)/repo $(ROOT)/$(LOGIN)/doc $(ROOT)/$(LOGIN)/install
 
-	#Copy repo including hidden git files
-	cp -r . $(LOGIN)/repo/
+	#Copy everything, one at a time, to avoid looping files and duplicates
+	cp -r $(ROOT)/src $(ROOT)/assets $(ROOT)/mockup $(ROOT)/plan $(ROOT)/profiling $(ROOT)/$(LOGIN)/repo/ 2>/dev/null || true
+	cp $(ROOT)/.gitignore $(ROOT)/.editorconfig $(ROOT)/LICENSE $(ROOT)/README.md $(ROOT)/*.png $(ROOT)/*.jpg $(ROOT)/*.txt $(ROOT)/*.pdf $(ROOT)/requirements.txt $(ROOT)/$(LOGIN)/repo/ 2>/dev/null || true
+	
+	#Copy .git files (git history required), -rf
+	cp -rf $(ROOT)/.git $(ROOT)/$(LOGIN)/repo/ 2>/dev/null || true
 
-	rm -rf $(LOGIN)/repo/doc
-	rm -rf $(LOGIN)/repo/$(LOGIN)
+	#Copy install and documentation
+	cp -r $(ROOT)/doc/* $(ROOT)/$(LOGIN)/doc/ 2>/dev/null || true
+	cp -r $(ROOT)/install/* $(ROOT)/$(LOGIN)/install/ 2>/dev/null || true
 
-	cp -r doc/* $(LOGIN)/doc/
-	cp -r install/* $(LOGIN)/install/
+	#Clear login inside repo/src clone
+	rm -rf $(ROOT)/$(LOGIN)/repo/src/$(LOGIN)
 
-	#Zip
-	zip -r $(LOGIN).zip $(LOGIN)
-	rm -rf $(LOGIN)
+	#Zip and clean
+	cd $(ROOT) && zip -r $(LOGIN).zip $(LOGIN)
+	rm -rf $(ROOT)/$(LOGIN)
 
 #========================================
 #Help
