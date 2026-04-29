@@ -4,7 +4,7 @@ import subprocess
 
 class TestStandardDeviationInput(unittest.TestCase):
     def terminal_setup(self, input_str):
-        process = subprocess.Popen(['python3', 'src/stddev.py'],
+        process = subprocess.Popen(['python3', 'stddev.py'],
                                    stdin=subprocess.PIPE,
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE,
@@ -23,12 +23,7 @@ class TestStandardDeviationInput(unittest.TestCase):
         # Dataflow: "0 3    5   4       2  6 1"
         # Expected stdout = 2.160246899
         stdout, stderr = self.terminal_setup("0 3    5   4       2  6 1")
-        try:
-            float(stdout)
-        except ValueError:
-            self.assertTrue(False)
-        else:
-            self.assertAlmostEqual(stdout, "2.160246899", 7)
+        self.assertAlmostEqual(float(stdout), 2.160246899, 7)
 
     def test_multiple_lines_multiple_elements(self):
         # Dataflow: "7 9\n8\n4 3 2"
@@ -39,7 +34,7 @@ class TestStandardDeviationInput(unittest.TestCase):
         except ValueError:
             self.assertTrue(False)
         else:
-            self.assertAlmostEqual(stdout, "2.880972058", 7)
+            self.assertAlmostEqual(float(stdout), 2.880972058, 7)
 
     def test_empty_lines(self):
         # Dataflow: "1\n\n2     3   \n \n   \n 4\n"
@@ -52,7 +47,7 @@ class TestStandardDeviationInput(unittest.TestCase):
             self.assertTrue(False)
 
         else:
-            self.assertAlmostEqual(float(stdout), "1.2909944", 7)
+            self.assertAlmostEqual(float(stdout), 1.2909944, 7)
 
     def test_floats(self):
         # Dataflow: "0.75, 1.5, 2.25"
