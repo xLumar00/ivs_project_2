@@ -10,12 +10,27 @@ MAX_FACTORIAL = 1000
 
 
 def _validate_numbers(*args):
+    """
+    @brief Validates that all provided arguments are either integers or floats.
+    @details This is an internal helper function used to ensure type safety across the library.
+    @param args Variable length argument list of values to check.
+    @raises TypeError If any argument in args is not of type int or float.
+    """
     for arg in args:
         if  not isinstance(arg, (int, float)):
             raise TypeError("Inputs must be numbers")
     
 def _clean_result(result):
-    
+    """
+    @brief Cleans up a numerical result to handle floating-point precision issues.
+    @details This internal helper function performs two formatting tasks:
+             1. Snaps the result to the nearest integer if it is within SNAP_TOL.
+             2. Otherwise, rounds the result to MAX_DECIMAL_PLACES to eliminate 
+                common floating-point arithmetic artifacts (e.g., ensuring 
+                0.3 - 0.2 returns 0.1 instead of 0.0999...).
+    @param result The numerical value to be cleaned.
+    @return The cleaned numerical result (either an int or a rounded float).
+    """
     round_result = round(result)
     if abs(result - round_result) < SNAP_TOL:
         return round_result
@@ -23,22 +38,47 @@ def _clean_result(result):
     return round(result,MAX_DECIMAL_PLACES)
     
 def add(a, b):
-    """(a+b) Returns the sum of a and b."""
+    """
+    @brief Calculates the sum of two numbers.
+    @param a The first number.
+    @param b The second number.
+    @return The sum of $a + b$.
+    @raises TypeError If inputs are not numbers.
+    """
     _validate_numbers(a, b)
     return _clean_result(a+b)
 
 def sub(a, b):
-    """(a-b) Returns the difference of a and b"""
+    """
+    @brief Calculates the difference between two numbers.
+    @param a The minuend.
+    @param b The subtrahend.
+    @return The difference of $a - b$.
+    @raises TypeError If inputs are not numbers.
+    """
     _validate_numbers(a, b)
     return _clean_result(a-b)
 
 def mul(a, b):
-    """(a*b)"""
+    """
+    @brief Calculates the product of two numbers.
+    @param a The multiplicand.
+    @param b The multiplier.
+    @return The product of $a * b$.
+    @raises TypeError If inputs are not numbers.
+    """
     _validate_numbers(a, b)
     return _clean_result(a*b)
 
 def div(a, b):
-    """ (a/b) Return division of a and b"""
+    """
+    @brief Calculates the division of two numbers.
+    @param a The dividend.
+    @param b The divisor.
+    @return The quotient of $a / b$.
+    @raises TypeError If inputs are not numbers.
+    @raises ZeroDivisionError If the divisor (b) is zero.
+    """
     _validate_numbers(a, b)
     
     if (b == 0):
@@ -48,7 +88,14 @@ def div(a, b):
 
 
 def factorial(n):
-    """(n!)Returns n factorial"""
+    """
+    @brief Calculates the factorial of a given number ($n!$).
+    @param n A non-negative integer.
+    @return The factorial of n.
+    @raises TypeError If the input is not a number.
+    @raises ValueError If n is negative or not an integer.
+    @raises OverflowError If n exceeds MAX_FACTORIAL.
+    """
     _validate_numbers(n) 
     if (0 > n) : 
         raise ValueError("argument must be natural number")
@@ -66,8 +113,16 @@ def factorial(n):
     return factorial
 
 def power(base, exponent):
-    """non-negative integer exponents only!!! returns base raised to the power of exponent """
-    _validate_numbers(base, exponent)
+    """
+    @brief Raises a base to a given non-negative integer exponent.
+    @details This function only supports non-negative integer exponents.
+    @param base The base number.
+    @param exponent The exponent (must be a non-negative integer).
+    @return The result of $base^{exponent}$.
+    @raises TypeError If inputs are not numbers.
+    @raises ValueError If exponent is negative or not an integer.
+    """
+    _validate_numbers(base)
     
     if (0 > exponent) : 
         raise ValueError("exponent must be natural number")
@@ -89,7 +144,14 @@ def power(base, exponent):
 
 # implemented using Newton-Raphson method
 def root(base, degree):
-    """Returns the nth root of the base."""
+    """
+    @brief Calculates the nth root of a base using the Newton-Raphson method.
+    @param base The number to find the root of.
+    @param degree The degree of the root ($n$).
+    @return The calculated root.
+    @raises TypeError If inputs are not numbers.
+    @raises ValueError If degree is 0, if attempting an even root of a negative number, if the derivative reaches zero, or if it fails to converge within MAX_ITER.
+    """
     _validate_numbers(base, degree)
     
     if base == 0:
@@ -133,13 +195,25 @@ def root(base, degree):
     raise ValueError("Exceeded maximum iterations without converging.")
 
 def square(a):
-    """(a^2) Returns a squared ."""
+    """
+    @brief Calculates the square of a number.
+    @param a The number to be squared.
+    @return The result of $a^2$.
+    @raises TypeError If input is not a number.
+    """
     _validate_numbers(a)
     
     return _clean_result(a*a)
 
 def sqrt(a):
-    """Returns square root of a"""
+    """
+    @brief Calculates the square root of a number.
+    @details Implemented using the Babylonian method (a specific case of Newton's method).
+    @param a The non-negative number to find the square root of.
+    @return The square root of a.
+    @raises TypeError If input is not a number.
+    @raises ValueError If a is negative or if the method fails to converge.
+    """
     _validate_numbers(a)
     if a < 0:
         raise ValueError
@@ -164,7 +238,13 @@ def sqrt(a):
     
 
 def inverse(x):
-    """(1/x) Returns ONE over X"""
+    """
+    @brief (1/x) Returns ONE over X
+    @param x The number to invert.
+    @return The result of $1/x$.
+    @raises TypeError If input is not a number.
+    @raises ZeroDivisionError If x is zero.
+    """
     _validate_numbers(x)
     
     if (x==0):
