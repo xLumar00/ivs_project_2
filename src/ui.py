@@ -10,12 +10,25 @@ def can_add_operator():
     if text == "":
         return False
     
-    forbidden_suffixes = ("+", "-", "*", "/", ".", "!", "^", "^2", "sq", "sqrt", "rt", "1/x")
+    forbidden_suffixes = ("+", "-", "*", "/", ".", "^", "sq", "sqrt", "rt", "1/x")
        
     if text.endswith(forbidden_suffixes):
         return False
     
     return True
+
+def auto_compute():
+    text = display.get()
+    forbidden_suffixes = ("+", "-", "*", "/", ".", "^", "sq", "sqrt", "rt", "1/x")
+    if text.endswith(forbidden_suffixes):
+        return
+    
+    text_to_check = text[1:] if text.startswith("-") else text
+
+    for op in ["+", "-", "*", "/", "^", "sq", "rt", "1/x", "!"]:
+        if op in text_to_check:
+            button_equals()
+            break
 
 
 app = ctk.CTk()
@@ -86,6 +99,7 @@ button.grid(row=6, column=3, padx=10, pady=10, sticky="nsew")
 
 
 def button_inverse():
+    auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
         display.insert("end", "1/x")
@@ -96,6 +110,7 @@ button.grid(row=2, column=2, padx=10, pady=10, sticky="nsew")
 
 
 def button_sq():
+    auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
         display.insert("end", "sq")
@@ -106,6 +121,7 @@ button.grid(row=2, column=1, padx=10, pady=10, sticky="nsew")
 
 
 def button_square():
+    auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
         display.insert("end", "^2")
@@ -116,6 +132,7 @@ button.grid(row=1, column=1, padx=10, pady=10, sticky="nsew")
 
 
 def button_root():
+    auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
         display.insert("end", "rt")
@@ -126,6 +143,7 @@ button.grid(row=2, column=0, padx=10, pady=10, sticky="nsew")
 
 
 def button_power():
+    auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
         display.insert("end", "^")
@@ -136,6 +154,7 @@ button.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
 
 
 def button_add():
+    auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
         display.insert("end", "+")
@@ -146,6 +165,7 @@ button.grid(row=5, column=3, padx=10, pady=10, sticky="nsew")
 
 
 def button_sub():
+    auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
         display.insert("end", "-")
@@ -168,6 +188,7 @@ button.grid(row=1, column=3, padx=10, pady=10, sticky="nsew")
 
 
 def button_div():
+    auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
         display.insert("end", "/")
@@ -178,6 +199,7 @@ button.grid(row=2, column=3, padx=10, pady=10, sticky="nsew")
 
 
 def button_mul():
+    auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
         display.insert("end", "*")
@@ -197,10 +219,28 @@ button.grid(row=1, column=2, padx=10, pady=10, sticky="nsew")
 
 
 def button_factorial():
-    if can_add_operator() == True:
-        display.configure(state="normal")
-        display.insert("end", "!")
-        display.configure(state="readonly")
+    text = display.get()
+    if text == "":
+        return
+    
+    last_number = text
+    for operator in ["+", "-", "*", "/", "^", "rt"]:
+        if operator in last_number:
+            last_number = last_number.split(operator)[-1]
+
+    if last_number != "":
+        try:
+            number = int(float(last_number))
+            result = math_lib.factorial(number)
+
+            new_text = text[:-len(last_number)] + str(result)
+
+            display.configure(state="normal")
+            display.delete(0, "end")
+            display.insert("end", new_text)
+            display.configure(state="readonly")
+        except Exception:
+            pass
 
 button = ctk.CTkButton(app, text="!", command=button_factorial)
 button.grid(row=6, column=0, padx=10, pady=10, sticky="nsew")
