@@ -20,7 +20,7 @@ def main():
     for line in sys.stdin:
         char_seqs = line.split()
         for char_seq in char_seqs:
-            char_seq.replace(',', '')
+            char_seq = char_seq.replace(',', '')
 
             try:
                 number = float(char_seq)
