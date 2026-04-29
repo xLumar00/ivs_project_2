@@ -1,8 +1,9 @@
+
 def _validate_numbers(*args):
     for arg in args:
         if  not isinstance(arg, (int, float)):
             raise TypeError("Inputs must be numbers")
-        
+    
 def add(a, b):
     """(a+b) Returns the sum of a and b."""
     _validate_numbers(a, b)
@@ -26,15 +27,18 @@ def div(a, b):
         raise ZeroDivisionError("Cannot divide by zero")
     
     return (a/b)
-
+MAX_FACTORIAL = 1000
 def factorial(n):
     """(n!)Returns n factorial"""
     _validate_numbers(n) 
     if (0 > n) : 
-        raise ValueError("exponent must be natural number")
+        raise ValueError("argument must be natural number")
     
     if not (isinstance(n, int)):
-        raise ValueError("exponent must be natural number")
+        raise ValueError("argument must be natural number")
+    #set maximal factorial for safety
+    if n > MAX_FACTORIAL:
+        raise OverflowError
     
     factorial = 1
     while (n > 0):
@@ -62,7 +66,9 @@ def power(base, exponent):
         result *= base
        
     return result
-    
+
+TOL = 1e-10
+MAX_ITER = 100
 # implemented using Newton-Raphson method
 def root(base, degree):
     """Returns the nth root of the base."""
@@ -81,8 +87,7 @@ def root(base, degree):
     if base < 0 and degree % 2 == 0:
         raise ValueError("Cannot calculate an even root of a negative number using real numbers.")
     
-    TOL = 1e-10
-    MAX_ITER = 100
+    
     
     # Generate an automatic initial guess
     x_n = base / degree 
@@ -99,14 +104,14 @@ def root(base, degree):
         
         # Prevent division by zero
         if df_x_n == 0:
-            print("Derivative reached zero. Failed to converge.")
-            raise ValueError
+            
+            raise ValueError("Derivative reached zero. Failed to converge.")
             
         # The Newton-Raphson iteration step
         x_n = x_n - (f_x_n / df_x_n)
         
-    print("Exceeded maximum iterations without converging.")
-    raise ValueError
+    print
+    raise ValueError("Exceeded maximum iterations without converging.")
 
 def square(a):
     """(a^2) Returns a squared ."""
@@ -125,8 +130,6 @@ def sqrt(a):
     #first guess
     x_n = a/2
     
-    MAX_ITER = 100
-    TOL = 1e-10
     prev_x_n = 0
     
     for i in range(MAX_ITER):
@@ -149,3 +152,4 @@ def inverse(x):
         raise ZeroDivisionError
     
     return 1/x
+print(factorial(64))

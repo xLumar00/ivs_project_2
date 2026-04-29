@@ -165,7 +165,7 @@ class TestFactorial(unittest.TestCase):
         self.assertEqual(factorial(2), 2)
         self.assertEqual(factorial(5), 120)       
         self.assertEqual(factorial(10), 3628800)
-
+        
     
     def test_zero_factorial(self):
         #0! == 1
@@ -182,7 +182,16 @@ class TestFactorial(unittest.TestCase):
         # Standard factorials do not apply to fractions/decimals.
         with self.assertRaises(ValueError):
             factorial(3.5)
-
+            
+    def test_overflow_threshold(self):
+        
+        self.assertTrue(factorial(64), 126886932185884164103433389335161480802865516174545192198801894375214704230400000000000000)
+        self.assertGreater(factorial (MAX_FACTORIAL) , 0)
+        # checking the overflow limit for safety
+        with self.assertRaises(OverflowError):
+            factorial(1001)
+            
+            
 class TestPower(unittest.TestCase):
 
     # Standard tests
