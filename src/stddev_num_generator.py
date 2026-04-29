@@ -9,7 +9,7 @@ def generate(n):
         sys.stdout.write(f"{num}\n")
 
 if __name__ == "__main__":
-    count = 1000000
+    count = 10000000
     if len(sys.argv) > 1:
         try: 
             count = int(sys.argv[1])
