@@ -1,23 +1,41 @@
+#Formatting precision
+SNAP_TOL = 1e-7  
+MAX_DECIMAL_PLACES = 9
+
+# Algorithmic precision
+ROOT_TOL = 1e-10 
+MAX_ITER = 100
+# Memory Safety
+MAX_FACTORIAL = 1000
+
 
 def _validate_numbers(*args):
     for arg in args:
         if  not isinstance(arg, (int, float)):
             raise TypeError("Inputs must be numbers")
     
+def _clean_result(result):
+    
+    round_result = round(result)
+    if abs(result - round_result) < SNAP_TOL:
+        return round_result
+    #round numbers outside of needed decimal precision(7decimals) so 0.3 - 0.2 = 0.1 not 0.0999...
+    return round(result,MAX_DECIMAL_PLACES)
+    
 def add(a, b):
     """(a+b) Returns the sum of a and b."""
     _validate_numbers(a, b)
-    return (a+b)
+    return _clean_result(a+b)
 
 def sub(a, b):
     """(a-b) Returns the difference of a and b"""
     _validate_numbers(a, b)
-    return (a-b)
+    return _clean_result(a-b)
 
 def mul(a, b):
     """(a*b)"""
     _validate_numbers(a, b)
-    return (a*b)
+    return _clean_result(a*b)
 
 def div(a, b):
     """ (a/b) Return division of a and b"""
@@ -26,8 +44,9 @@ def div(a, b):
     if (b == 0):
         raise ZeroDivisionError("Cannot divide by zero")
     
-    return (a/b)
-MAX_FACTORIAL = 1000
+    return _clean_result(a/b)
+
+
 def factorial(n):
     """(n!)Returns n factorial"""
     _validate_numbers(n) 
@@ -65,10 +84,9 @@ def power(base, exponent):
     for counter in range(1,exponent):
         result *= base
        
-    return result
+    return _clean_result(result)
 
-TOL = 1e-10
-MAX_ITER = 100
+
 # implemented using Newton-Raphson method
 def root(base, degree):
     """Returns the nth root of the base."""
@@ -97,8 +115,9 @@ def root(base, degree):
         f_x_n = (x_n ** degree) - base
         
         # Check if we are close enough to the true root
-        if abs(f_x_n) < TOL:
-            return x_n
+        if abs(f_x_n) < ROOT_TOL:
+            
+            return _clean_result(x_n)
             
         df_x_n = degree * (x_n ** (degree - 1))
         
@@ -117,7 +136,7 @@ def square(a):
     """(a^2) Returns a squared ."""
     _validate_numbers(a)
     
-    return a*a 
+    return _clean_result(a*a)
 
 def sqrt(a):
     """Returns square root of a"""
@@ -138,8 +157,8 @@ def sqrt(a):
         # calculating  sqrt based on our guess
         x_n = 1/2 * (x_n + a/x_n)
         # check if calculation is close enough
-        if  abs(x_n - prev_x_n) < TOL:
-            return x_n
+        if  abs(x_n - prev_x_n) < ROOT_TOL:
+            return _clean_result(x_n)
 
     return ValueError
     
@@ -151,4 +170,5 @@ def inverse(x):
     if (x==0):
         raise ZeroDivisionError
     
-    return 1/x
+    return _clean_result(1/x)
+
