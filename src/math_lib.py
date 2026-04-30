@@ -106,9 +106,7 @@ def root(base, degree):
     
     # we can calculate the root of negative number only uneven number
     if base < 0 and degree % 2 == 0:
-        raise ValueError("Cannot calculate an even root of a negative number")
-    
-    
+        raise ValueError("Cannot calc an even root of a neg num")
     
     # Generate an automatic initial guess
     x_n = base / degree 
