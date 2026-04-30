@@ -16,6 +16,14 @@ if [ $EUID -ne 0 ]; then
 fi
 
 #========================================
+#Checking pip
+#========================================
+if ! command -v pip3 &>/dev/null; then
+	apt update && apt install python3-pip -y
+fi
+python3 -m pip install customtkinter
+
+#========================================
 #Copy source
 #========================================
 mkdir -p "$INSTALL_DIR"
@@ -33,6 +41,12 @@ fi
 #========================================
 chmod +x "$INSTALL_DIR/main.py"
 ln -s -f "$INSTALL_DIR/main.py" "$BIN_DIR/Calculator_IVS"
+
+#========================================
+# Symlink pre stddev (profiling)
+#========================================
+chmod +x "$INSTALL_DIR/stddev.py"
+ln -s -f "$INSTALL_DIR/stddev.py" "$BIN_DIR/stddev"
 
 #========================================
 #Check for py3
@@ -80,4 +94,3 @@ EOF
 #========================================
 
 echo "Installation successful!"
-

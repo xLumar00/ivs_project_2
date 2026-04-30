@@ -94,10 +94,10 @@ help:
 #Install/Uninstall
 #========================================
 install:
-	sudo bash install/install.sh
+	sudo bash $(ROOT)/install/install.sh
 
 #========================================
 uninstall:
-	sudo bash install/uninstall.sh
+	sudo bash $(ROOT)/install/uninstall.sh
 
 #========================================

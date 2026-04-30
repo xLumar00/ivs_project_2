@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 ## @file main.py
 #  @brief Entry point for the IVS Calculator application.
 #  @author xluptam00
