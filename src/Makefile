@@ -20,8 +20,8 @@ INSTALL_SRC = $(ROOT)/install
 #Default commands
 #========================================
 all:
-	@$(PYTHON) -m pip --version > /dev/null 2>&1 || (echo "Pip missing. Installing..." && sudo apt update && sudo apt install python3-pip -y)
-	$(PYTHON) -m pip install -r $(ROOT)/requirements.txt --break-system-packages
+	@#@$(PYTHON) -m pip --version > /dev/null 2>&1 || (echo "Pip missing. Installing..." && sudo apt update && sudo apt install python3-pip -y)
+	$(PYTHON) -m pip install --user -r $(ROOT)/requirements.txt --break-system-packages
 
 #========================================
 run:
@@ -33,12 +33,13 @@ test:
 
 #========================================
 doc:
-	@command -v doxygen > /dev/null 2>&1 || (echo "Doxygen missing. Installing..." && sudo apt update && sudo apt install doxygen -y)
+	@#@command -v doxygen > /dev/null 2>&1 || (echo "Doxygen missing. Installing..." && sudo apt update && sudo apt install doxygen -y)
 	cd $(ROOT) && doxygen src/Doxyfile
 
 #========================================
 stddev:
-	$(PYTHON) stddev_num_generator.py | $(PYTHON) $(STDDEV)
+	@#$(PYTHON) stddev_num_generator.py | $(PYTHON) $(STDDEV)
+	chmod +x $(STDDEV)
 
 #========================================
 clean:
@@ -85,7 +86,7 @@ help:
 	@echo "  make all    - Nainštaluje závislosti (pip)"
 	@echo "  make run    - Spustí grafické rozhranie kalkulačky"
 	@echo "  make test   - Spustí automatické testy"
-	@echo "  make stddev - Spustí program pre profiling"
+	@echo "  make stddev - Pripraví program pre profiling (nastaví práva)"
 	@echo "  make doc    - Vygeneruje programovú dokumentáciu"
 	@echo "  make clean  - Odstráni všetky vygenerované súbory"
 	@echo "  make pack   - Zabalí projekt do archívu na odovzdanie"

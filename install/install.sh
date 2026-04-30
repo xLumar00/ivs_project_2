@@ -74,13 +74,29 @@ fi
 #Symlink
 #========================================
 chmod +x "$INSTALL_DIR/main.py"
-ln -s -f "$INSTALL_DIR/main.py" "$BIN_DIR/Calculator_IVS"
+#ln -s -f "$INSTALL_DIR/main.py" "$BIN_DIR/Calculator_IVS"
+
+#main wrapper:
+cat <<EOF >"$BIN_DIR/Calculator_IVS"
+#!/bin/bash
+cd $INSTALL_DIR
+python3 main.py "\$@"
+EOF
+chmod +x "$BIN_DIR/Calculator_IVS"
 
 #========================================
 # Symlink pre stddev (profiling)
 #========================================
 chmod +x "$INSTALL_DIR/stddev.py"
-ln -s -f "$INSTALL_DIR/stddev.py" "$BIN_DIR/stddev"
+#ln -s -f "$INSTALL_DIR/stddev.py" "$BIN_DIR/stddev"
+
+#stddev wrapper
+cat <<EOF >"$BIN_DIR/stddev"
+#!/bin/bash
+cd $INSTALL_DIR
+python3 stddev.py "\$@"
+EOF
+chmod +x "$BIN_DIR/stddev"
 
 #========================================
 #Desktop launcher and icon
