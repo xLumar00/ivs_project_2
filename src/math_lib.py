@@ -157,18 +157,27 @@ def root(base, degree):
     """
     _validate_numbers(base, degree)
     
+    if degree == 0:
+        raise ValueError("The root degree cannot be zero.")
+    
+    is_negative_degree = degree < 0
+    # we can calculate the root of negative number only uneven number
+    
+    if base < 0 and degree % 2 == 0:
+        raise ValueError("Cannot calc an even root of a neg num")
+    
+    if is_negative_degree:
+        # Prevent 1 / 0 division errors mathematically
+        if base == 0:
+            raise ZeroDivisionError("Cannot calculate a negative root of zero.")
+        degree = abs(degree)
+        
     if base == 0:
         return 0
     
     if base == 1:
-        
         return 1
-    if degree == 0:
-        raise ValueError("The root degree cannot be zero.")
     
-    # we can calculate the root of negative number only uneven number
-    if base < 0 and degree % 2 == 0:
-        raise ValueError("Cannot calc an even root of a neg num")
     
     # Generate an automatic initial guess
     x_n = base / degree 
@@ -180,6 +189,9 @@ def root(base, degree):
         # Check if we are close enough to the true root
         if abs(f_x_n) < ROOT_TOL:
             
+            if is_negative_degree:
+                x_n = 1 / x_n
+                
             return _clean_result(x_n)
             
         df_x_n = degree * (x_n ** (degree - 1))

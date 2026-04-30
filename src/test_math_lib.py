@@ -293,6 +293,29 @@ class TestRoot(unittest.TestCase):
     def test_invalid_types(self):
         with self.assertRaises(TypeError):
             root("nine", 2)
+    
+    def test_standard_negative_root(self):
+        # The -3rd root of 8 is 1 / (3rd root of 8) -> 1 / 2 = 0.5
+        self.assertEqual(root(8, -3), 0.5)
+
+    def test_even_negative_root(self):
+        # The -2nd root of 16 is 1 / (2nd root of 16) -> 1 / 4 = 0.25
+        self.assertEqual(root(16, -2), 0.25)
+
+    
+    def test_negative_base_negative_odd_root(self):
+        # The -5th root of -32 is 1 / (5th root of -32) -> 1 / -2 = -0.5
+        self.assertEqual(root(-32, -5), -0.5)
+
+    
+    def test_zero_trap_raises_error(self):
+        # 0^(-2) is mathematically impossible (1/0). 
+        with self.assertRaises(ZeroDivisionError):
+            root(0, -2)
+            
+        # Also verify it works for odd negative degrees
+        with self.assertRaises(ZeroDivisionError):
+            root(0, -3)
 
 
 class TestSqrt(unittest.TestCase):
