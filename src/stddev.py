@@ -1,10 +1,30 @@
 #!/usr/bin/env python3
+##
+# @file stddev.py
+# @brief Module for calculating the sample standard deviation from standard input.
+# @author timot
+# @date 2026-04-30
+#
+
 import sys
 import math_lib
 
+##
+# @brief Calculates the sample standard deviation using a one-pass formula.
+# 
+# This function implements the derived formula for sample standard deviation
+# to maintain O(1) space complexity by only using the sum and sum of squares.
+#
+# @param n The total count of elements in the sequence. 
+# @param sum_numbers The arithmetic sum of all elements in the sequence. 
+# @param sum_squares The sum of the squares of all elements in the sequence. 
+#
+# @return The calculated sample standard deviation as a float, or "Undefined." 
+#         if the count of elements is less than 2. 
+#
 def stddev_calc(n, sum_numbers, sum_squares):
     if n < 2:
-        return 0.0
+        return "Undefined."
         #if the sequence has less than 2 elements, we will return 0.0 as the StdDev
 
     arithmetic_mean = math_lib.div(sum_numbers, n)
@@ -12,6 +32,13 @@ def stddev_calc(n, sum_numbers, sum_squares):
     return max(0.0, s) #if the result is negative and close to 0, we will return 0.0
 
 
+##
+# @brief Main function that reads data from stdin and prints the result.
+#
+# Processes numbers separated by whitespace until the end of the file is reached.
+# It tracks the count, sum, and sum of squares incrementally for memory efficiency.
+# 
+#
 def main():
     count = 0
     sum_of_numbers = 0.0
@@ -20,7 +47,6 @@ def main():
     for line in sys.stdin:
         char_seqs = line.split()
         for char_seq in char_seqs:
-            char_seq = char_seq.replace(',', '')
 
             try:
                 number = float(char_seq)
