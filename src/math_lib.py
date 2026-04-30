@@ -50,14 +50,14 @@ def div(a, b):
 def factorial(n):
     """(n!)Returns n factorial"""
     _validate_numbers(n) 
-    if (0 > n) : 
-        raise ValueError("argument must be natural number")
+    if (n < 0) : 
+        raise ValueError("n! not defined for negative values")
     
     if not (isinstance(n, int)):
-        raise ValueError("argument must be natural number")
+        raise ValueError("n! must be a natural number")
     #set maximal factorial for safety
     if n > MAX_FACTORIAL:
-        raise OverflowError
+        raise OverflowError("Overflow: n is too large")
     
     factorial = 1
     while (n > 0):
@@ -70,10 +70,13 @@ def power(base, exponent):
     _validate_numbers(base, exponent)
     
     if (0 > exponent) : 
-        raise ValueError("exponent must be natural number")
+        raise ValueError("Exponent must be natural numbers or 0")
+    
+    if isinstance(exponent, float) and exponent.is_integer():
+        exponent = int(exponent)
     
     if not (isinstance(exponent, int)):
-        raise ValueError("exponent must be natural number")
+        raise ValueError("Exponent must be natural numbers or 0")
     
     if exponent == 0:
         return 1
@@ -99,11 +102,11 @@ def root(base, degree):
         
         return 1
     if degree == 0:
-        raise ValueError
+        raise ValueError("The root degree cannot be zero.")
     
     # we can calculate the root of negative number only uneven number
     if base < 0 and degree % 2 == 0:
-        raise ValueError("Cannot calculate an even root of a negative number using real numbers.")
+        raise ValueError("Cannot calculate an even root of a negative number")
     
     
     
@@ -124,13 +127,13 @@ def root(base, degree):
         # Prevent division by zero
         if df_x_n == 0:
             
-            raise ValueError("Derivative reached zero. Failed to converge.")
+            raise ValueError("Calculation could not finish.")
             
         # The Newton-Raphson iteration step
         x_n = x_n - (f_x_n / df_x_n)
         
     print
-    raise ValueError("Exceeded maximum iterations without converging.")
+    raise ValueError("Calculation took too long stopped")
 
 def square(a):
     """(a^2) Returns a squared ."""
@@ -142,7 +145,7 @@ def sqrt(a):
     """Returns square root of a"""
     _validate_numbers(a)
     if a < 0:
-        raise ValueError
+        raise ValueError("Cannot calculate the sqrt of a neg number")
     
     if a == 0:
         return 0 
@@ -160,7 +163,7 @@ def sqrt(a):
         if  abs(x_n - prev_x_n) < ROOT_TOL:
             return _clean_result(x_n)
 
-    return ValueError
+    raise ValueError
     
 
 def inverse(x):
@@ -168,7 +171,7 @@ def inverse(x):
     _validate_numbers(x)
     
     if (x==0):
-        raise ZeroDivisionError
+        raise ZeroDivisionError("Division by 0")
     
     return _clean_result(1/x)
 
