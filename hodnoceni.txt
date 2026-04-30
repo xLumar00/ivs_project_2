@@ -1,0 +1,4 @@
+xluptam00 100 (Inštalácia, integrácia, Makefile)
+xlukott00 100 (Matematická knižnica, testy)
+xheldim00 100 (Grafické rozhranie)
+xvojtat00 100 (Profiling, stddev)

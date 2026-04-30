@@ -1,0 +1,55 @@
+﻿Tým: ABSOLUTE ZEROS
+Vedúci: [Lupták Marek], xluptam00
+
+
+1. Zvolené komunikačné kanály a pravidlá:
+- Hlavná komunikácia prebieha cez Discord.
+- Pravidlo: Každý väčší kus kódu sa posiela do repozitára cez Pull Request a aspoň jeden ďalší člen tímu ho musí schváliť (Code Review).
+- Pravidlo: Stretnutie (call) celého tímu je minimálne 1x týždenne (v nedeľu večer) na zhodnotenie progresu a rozdelenie úloh na ďalší týždeň.
+- Pravidlo (Doxygen a Mockup): Podľa odporúčaní zo zadania vytvorí základný Doxyfile každý člen tímu nezávisle, následne ich porovnáme a vyberieme najlepší. Na návrhu Mockupu pre ďalšiu verziu sa budú podieľať všetci členovia tímu spoločne.
+-Pravidlo (Coding Standard): Pri písaní kódu v Pythone budeme dodržiavať štandard PEP 8 (premenné a funkcie v snake_case, triedy v CamelCase), stanovený jazyk ENG. Pred vytvorením Pull Requestu musí byť kód uprataný a formátovo zjednotený. 
+
+
+
+
+2. Systém pre správu verzií, repozitár, technologie a prostredia:
+- Systém: GIT
+- Hosting: GitHub.com
+- Odkaz na repozitár: https://github.com/xLumar00/ivs_project_2
+- Prístup pre cvičiacich: Do repozitára bol pozvaný email ivs.kontrola@gmail.com s právami na čítanie (Read access).
+Programovací jazyk: Python 3
+Knižnica pre GUI:  Custom Tkinter / PyQt6 
+Cieľové testovacie prostredie: Dodaný virtuálny stroj Ubuntu 24.04 64bit.
+
+
+3. Pridelenie úloh na projekte jednotlivým riešiteľom:
+Rozdelenie je navrhnuté v modeli 2+2 (Core aplikácia + Dáta & Infraštruktúra), pričom na finálnej dokumentácii, mockupe a testovaní sa podieľa celý tím. (Core aplikácia je primarne rozdelená na rolu frontend a backend, alternatívne spolupráca, párové programovanie)
+
+
+- [Matúš Heldi, xheldim00] (Backend): 
+  Implementácia matematickej knižnice a tvorba automatických testov (TDD). Pomoc s integráciou do GUI.
+
+
+- [Timotej Lukoťka, xlukott00] (Frontend): 
+  Návrh a implementácia grafického užívateľského rozhrania (GUI), prepojenie GUI s matematickou knižnicou, ošetrenie užívateľských vstupov.
+
+
+- [Timotej Vojtáš, xvojtat00] (Diagnostika a Profiling): 
+  Vývoj CLI programu stddev (výpočet smerodajnej odchýlky), meranie výkonu pomocou profileru, vypracovanie reportu z profilovania.
+
+
+- [Lupták Marek, xluptam00] (Linux & DevOps, hlavná správa repozitára): 
+  Tvorba komplexného Makefile (ciele all, pack, clean, test...), vytvorenie inštalátora (napr. .deb balíček) a odinštalátora, hlavná integrácia softvéru, optimalizácia a testovanie pre prostredie Ubuntu, spravovanie repozitára.
+
+
+4. Stanovené termíny (Milestones):
+- Fáza 1 (do 05.04.): 
+  Hotová základná matematická knižnica vrátane testov. Vytvorená kostra grafického rozhrania. Založená štruktúra Makefile.
+- Fáza 2 (do 14.04.): 
+  Plne prepojené GUI s backendom. Hotový a otestovaný program stddev. Makefile obsahuje všetky základné ciele.
+- Fáza 3 (do 21.04.): 
+  Dokončený inštalátor a odinštalátor. Vykonaný profiling a spísaný report. Vygenerovaná Doxygen dokumentácia a spísaný užívateľský manuál. Vytvorený Mockup.
+- Fáza 4 (22.04. - 28.04.): 
+  Časová rezerva. Interné testovanie celého tímu na čistom virtuálnom stroji (Ubuntu 24.04). Oprava nájdených chýb (bugfixing).
+- Fáza 5 (29.04.): 
+  Finálne zabalenie projektu (make pack), kontrola štruktúry odovzdávaného archívu a odovzdanie do IS VUT.
