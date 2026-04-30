@@ -1,8 +1,19 @@
+"""!
+@file ui.py
+@brief Graphical User Interface for the Calculator application.
+@details Uses customtkinter to create a grid-based calculator and connects it to the math_lib module for calculations.
+"""
+
 import customtkinter as ctk
 import math_lib
 
 
 def can_add_operator():
+    """!
+    @brief Checks if a mathematical operator can be added to the current expression.
+    @details Validates the display text to prevent adding operators to an empty string or chaining multiple operators.
+    @return True if an operator can be appended safely, False otherwise.
+    """
     text = display.get()
 
     if text == "":
@@ -17,6 +28,10 @@ def can_add_operator():
 
 
 def auto_compute():
+    """!
+    @brief Automatically computes the current expression before appending a new operator.
+    @details Allows the user to chain calculations continuously (e.g., typing "5+5+" automatically calculates 10 before adding the next "+").
+    """
     text = display.get()
     forbidden_suffixes = ("+", "-", "*", "/", ".", "^", "sq", "sqrt", "rt", "1/x")
     if text.endswith(forbidden_suffixes):
@@ -31,6 +46,10 @@ def auto_compute():
 
 
 def open_help():  
+    """!
+    @brief Opens a secondary top-level window containing a help guide.
+    @details Displays instructions for the buttons, keyboard shortcuts, and general information about errors.
+    """
     help_window = ctk.CTkToplevel(app)
     help_window.title("Hint")
     help_window.geometry("400x500")
@@ -84,6 +103,10 @@ display.grid(row=0, column=0, columnspan=4, padx=10, pady=(20, 20), sticky="nsew
 
 
 def key_pressed(event):
+    """!
+    @brief Binds keyboard inputs to the corresponding calculator functions.
+    @param event The Tkinter event object containing information about the pressed key.
+    """
     char = event.char
     keysym = event.keysym
 
@@ -113,6 +136,10 @@ app.bind('<Key>', key_pressed)
 
 
 def button_equals():
+    """!
+    @brief Evaluates the mathematical expression currently shown on the display.
+    @details Parses the string, identifies the operation, sends it to the math_lib module, and updates the display. Also handles dynamic error formatting.
+    """
     expression = display.get()
 
     forbidden_suffixes = ("+", "-", "*", "/", ".", "^", "rt")
@@ -183,6 +210,9 @@ button.grid(row=6, column=3, padx=5, pady=5, sticky="nsew")
 
 
 def button_inverse():
+    """!
+    @brief Immediately calculates the inverse (1/x) of the last entered number.
+    """
     text = display.get()
     if text == "":
         return
@@ -211,6 +241,10 @@ button.grid(row=2, column=2, padx=5, pady=5, sticky="nsew")
 
 
 def button_sq():
+    """!
+    @brief Immediately calculates the square root of the last entered number.
+    @details Includes frontend validation to block operations on negative numbers ending in a minus sign.
+    """
     text = display.get()
     if text == "":
         return
@@ -243,6 +277,9 @@ button.grid(row=2, column=1, padx=5, pady=5, sticky="nsew")
 
 
 def button_square():
+    """!
+    @brief Immediately calculates the square of the last entered number.
+    """
     text = display.get()
     if text == "":
         return
@@ -270,6 +307,9 @@ button.grid(row=1, column=1, padx=5, pady=5, sticky="nsew")
 
 
 def button_root():
+    """!
+    @brief Appends the N-th root operator ('rt') to the current expression.
+    """
     auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
@@ -281,6 +321,9 @@ button.grid(row=2, column=0, padx=5, pady=5, sticky="nsew")
 
 
 def button_power():
+    """!
+    @brief Appends the power operator ('^') to the current expression.
+    """
     auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
@@ -292,6 +335,9 @@ button.grid(row=1, column=0, padx=5, pady=5, sticky="nsew")
 
 
 def button_add():
+    """!
+    @brief Appends the addition operator ('+') to the display.
+    """
     auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
@@ -303,6 +349,10 @@ button.grid(row=5, column=3, padx=5, pady=5, sticky="nsew")
 
 
 def button_sub():
+    """!
+    @brief Appends the subtraction operator ('-') to the display.
+    @details Contains logic to handle appending negative signs to empty expressions or after other operators.
+    """
     auto_compute()
     text = display.get()
 
@@ -327,6 +377,9 @@ button.grid(row=4, column=3, padx=5, pady=5, sticky="nsew")
 
 
 def button_rm():
+    """!
+    @brief Removes the last character from the display, acting as a backspace.
+    """
     current_text = display.get()
     if len(current_text) > 0:
         display.configure(state="normal")
@@ -339,6 +392,9 @@ button.grid(row=1, column=3, padx=5, pady=5, sticky="nsew")
 
 
 def button_div():
+    """!
+    @brief Appends the division operator ('/') to the display.
+    """
     auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
@@ -350,6 +406,9 @@ button.grid(row=2, column=3, padx=5, pady=5, sticky="nsew")
 
 
 def button_mul():
+    """!
+    @brief Appends the multiplication operator ('*') to the display.
+    """
     auto_compute()
     if can_add_operator() == True:
         display.configure(state="normal")
@@ -361,6 +420,9 @@ button.grid(row=3, column=3, padx=5, pady=5, sticky="nsew")
 
 
 def button_ac():
+    """!
+    @brief Clears the entire display, acting as an All Clear (AC) function.
+    """
     display.configure(state="normal")
     display.delete(0, "end")
     display.configure(state="readonly")
@@ -370,6 +432,9 @@ button.grid(row=1, column=2, padx=5, pady=5, sticky="nsew")
 
 
 def button_factorial():
+    """!
+    @brief Immediately calculates the factorial (!) of the last entered number.
+    """
     text = display.get()
     if text == "":
         return
@@ -398,6 +463,9 @@ button.grid(row=6, column=0, padx=5, pady=5, sticky="nsew")
 
 
 def button_point():
+    """!
+    @brief Appends a decimal point to the current number being typed.
+    """
     current_text = display.get()
     last_number = current_text
     for operator in ["+", "-", "*", "/", "^", "rt"]:
@@ -419,6 +487,9 @@ button.grid(row=6, column=2, padx=5, pady=5, sticky="nsew")
 
 
 def button0():
+    """!
+    @brief Appends the number '0' to the display.
+    """
     display.configure(state="normal")
     display.insert("end", "0")
     display.configure(state="readonly")
@@ -428,6 +499,9 @@ button.grid(row=6, column=1, padx=5, pady=5, sticky="nsew")
 
 
 def button1():
+    """!
+    @brief Appends the number '1' to the display.
+    """
     display.configure(state="normal")
     display.insert("end", "1")
     display.configure(state="readonly")
@@ -437,6 +511,9 @@ button.grid(row=5, column=0, padx=5, pady=5, sticky="nsew")
 
 
 def button2():
+    """!
+    @brief Appends the number '2' to the display.
+    """
     display.configure(state="normal")
     display.insert("end", "2")
     display.configure(state="readonly")
@@ -446,6 +523,9 @@ button.grid(row=5, column=1, padx=5, pady=5, sticky="nsew")
 
 
 def button3():
+    """!
+    @brief Appends the number '3' to the display.
+    """
     display.configure(state="normal")
     display.insert("end", "3")
     display.configure(state="readonly")
@@ -455,6 +535,9 @@ button.grid(row=5, column=2, padx=5, pady=5, sticky="nsew")
 
 
 def button4():
+    """!
+    @brief Appends the number '4' to the display.
+    """
     display.configure(state="normal")
     display.insert("end", "4")
     display.configure(state="readonly")
@@ -464,6 +547,9 @@ button.grid(row=4, column=0, padx=5, pady=5, sticky="nsew")
 
 
 def button5():
+    """!
+    @brief Appends the number '5' to the display.
+    """
     display.configure(state="normal")
     display.insert("end", "5")
     display.configure(state="readonly")
@@ -473,6 +559,9 @@ button.grid(row=4, column=1, padx=5, pady=5, sticky="nsew")
 
 
 def button6():
+    """!
+    @brief Appends the number '6' to the display.
+    """
     display.configure(state="normal")
     display.insert("end", "6")
     display.configure(state="readonly")
@@ -482,6 +571,9 @@ button.grid(row=4, column=2, padx=5, pady=5, sticky="nsew")
 
 
 def button7():
+    """!
+    @brief Appends the number '7' to the display.
+    """
     display.configure(state="normal")
     display.insert("end", "7")
     display.configure(state="readonly")
@@ -491,6 +583,9 @@ button.grid(row=3, column=0, padx=5, pady=5, sticky="nsew")
 
 
 def button8():
+    """!
+    @brief Appends the number '8' to the display.
+    """
     display.configure(state="normal")
     display.insert("end", "8")
     display.configure(state="readonly")
@@ -500,6 +595,9 @@ button.grid(row=3, column=1, padx=5, pady=5, sticky="nsew")
 
 
 def button9():
+    """!
+    @brief Appends the number '9' to the display.
+    """
     display.configure(state="normal")
     display.insert("end", "9")
     display.configure(state="readonly")
