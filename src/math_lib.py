@@ -100,6 +100,9 @@ def factorial(n):
     if (n < 0) : 
         raise ValueError("n! not defined for negative values")
     
+    if isinstance(n, float) and n.is_integer():
+        n = int(n)
+        
     if not (isinstance(n, int)):
         raise ValueError("n! must be a natural number")
     #set maximal factorial for safety
@@ -132,6 +135,9 @@ def power(base, exponent):
     
     if not (isinstance(exponent, int)):
         raise ValueError("Exponent must be natural numbers or 0")
+    
+    if exponent > 1000: # Adjust this limit based on your needs
+        raise OverflowError("Exponent is too large")
     
     if exponent == 0:
         return 1
@@ -199,7 +205,7 @@ def root(base, degree):
         # Prevent division by zero
         if df_x_n == 0:
             
-            raise ValueError("Calculation could not finish.")
+            raise ValueError("MathError:Div by 0 during root calc.")
             
         # The Newton-Raphson iteration step
         x_n = x_n - (f_x_n / df_x_n)
