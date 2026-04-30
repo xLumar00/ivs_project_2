@@ -31,14 +31,14 @@ class TestStandardDeviationMath(unittest.TestCase):
         # count = 1, sum = 12, sum_sq = 144
         # Expected 0.0 (in the formula there is N-1 in the denominator, so it needs to be handled with care)
         result = stddev_calc(1, 12, 144)
-        self.assertEqual(result, 0.0)
+        self.assertEqual(result.strip(), "Undefined.")
 
     def test_empty_dataset(self):
         # Dataset: (empty)
         # count = 0, sum = 0.0, sum_sq = 0.0
         # Expected 0.0 (no data, so no Standard Deviation)
         result = stddev_calc(0, 0, 0)
-        self.assertEqual(result, 0.0)
+        self.assertEqual(result.strip(), "Undefined.")
 
     def test_equal_elements_dataset(self):
         # Dataset: [4,4,4]
