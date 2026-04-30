@@ -169,7 +169,7 @@ def button_equals():
             error_msg = type(e).__name__
 
         if len(error_msg) > 12:
-            display.configure(font=("Roboto", 25, "bold"))
+            display.configure(font=("Roboto", 20, "bold"))
         elif len(error_msg) > 8:
             display.configure(font=("Roboto", 38, "bold"))
         else:
@@ -221,6 +221,10 @@ def button_sq():
             last_number = last_number.split(operator)[-1]
 
     if last_number != "":
+        if text.endswith("-" + last_number):
+            prefix = text[:-(len(last_number) + 1)]
+            if prefix == "" or prefix.endswith(("+", "-", "*", "/", "^", "rt")):
+                return
         try:
             number = float(last_number)
             result = math_lib.sqrt(number)
