@@ -4,7 +4,7 @@ import math_lib
 
 def stddev_calc(n, sum_numbers, sum_squares):
     if n < 2:
-        return 0.0
+        return "Undefined."
         #if the sequence has less than 2 elements, we will return 0.0 as the StdDev
 
     arithmetic_mean = math_lib.div(sum_numbers, n)
@@ -20,7 +20,6 @@ def main():
     for line in sys.stdin:
         char_seqs = line.split()
         for char_seq in char_seqs:
-            char_seq = char_seq.replace(',', '')
 
             try:
                 number = float(char_seq)

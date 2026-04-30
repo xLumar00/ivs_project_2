@@ -4,3 +4,4 @@ app_name
 profiling/vystup.*
 .DS_Store
 __pycache__/
+*numbers.txt
