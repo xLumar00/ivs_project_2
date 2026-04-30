@@ -1,0 +1,22 @@
+Skutočnosť vs. Plán:
+
+1. Termíny (Milestones): 
+Väčšina fáz projektu bola posunutá o 1-2 týždne z dôvodu časovej náročnosti implementácie GUI a ladenia inštalačných skriptov pre Ubuntu 24.04. Finálna integrácia prebehla v poslednom týždni pred odovzdaním.
+
+2. Harmonogram a Git história:
+Oproti pôvodnému plánu došlo k výraznému posunu začiatku implementačných prác. Hlavným dôvodom bolo podhodnotenie náročnosti prípravy prostredia a neskorý začiatok integračnej fázy. Väčšina prác bola preto realizovaná v rámci intenzívnych šprintov v záverečnej časti projektu.
+
+3. Technické komplikácie:
+Vývoj sa predĺžil kvôli neočakávaným problémom s kompatibilitou knižníc v prostredí Ubuntu 24.04 (zmeny v PEP 668 a inštalácii pip balíkov), čo si vyžiadalo dodatočný čas na opravu inštalačných skriptov a Makefile.
+
+4. Rozdelenie úloh:
+Úlohy boli v záverečnej fáze prerozdelené tak, aby sa stihli všetky povinné súčasti (integrácia a dokumentácia boli prioritizované na úkor skoršieho testovania).
+
+5. Rozdelenie úloh:
+Došlo k výmene rolí medzi xlukott00 a xheldim00. Timotej Lukoťka (xlukott00) nakoniec spracoval matematickú knižnicu a testy, zatiaľ čo Matúš Heldi (xheldim00) sa plne sústredil na grafické rozhranie (GUI).
+
+6. Technológie:
+Pre GUI sme namiesto uvažovaného PyQt6 zvolili knižnicu CustomTkinter, ktorá lepšie vyhovovala požiadavkám na moderný vzhľad a jednoduchšiu integráciu v cieľovom prostredí.
+
+7. Inštalátor:
+Pôvodne zvažovaný .deb balíček bol nahradený univerzálnym inštalačným skriptom (install.sh) a Makefile wrapperom, čo zabezpečuje spoľahlivejšiu inštaláciu závislostí v čistom prostredí Ubuntu 24.04.
