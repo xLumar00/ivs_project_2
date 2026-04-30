@@ -7,7 +7,7 @@ ROOT_TOL = 1e-10
 MAX_ITER = 100
 # Memory Safety
 MAX_FACTORIAL = 1000
-
+MAX_SAFE_INPUT = 1e100
 
 def _validate_numbers(*args):
     """
@@ -19,7 +19,8 @@ def _validate_numbers(*args):
     for arg in args:
         if  not isinstance(arg, (int, float)):
             raise TypeError("Inputs must be numbers")
-    
+        if abs(arg) > MAX_SAFE_INPUT:
+            raise OverflowError("Input number is too large for this calculator.")
 def _clean_result(result):
     """
     @brief Cleans up a numerical result to handle floating-point precision issues.
