@@ -2,6 +2,8 @@
 # IVS Kalkulačka - Projekt 2
 #========================================
 
+Tento projekt je implementáciou grafickej kalkulačky s matematickou knižnicou a nástrojom na výpočet smerodajnej odchýlky.
+
 ## Prostredi
 - Ubuntu 24.04 64bit (Primárne testovacie prostredie)
 - Fedora 43, Windows 11, MacOS (Vývojové prostredie)
@@ -24,6 +26,7 @@ Tento program je poskytovaný pod licenciou GNU GPL v3. Viac informácií nájde
 
 #========================================
 ## Použitie
-- `make help` - Zobrazí nápovedu k Makefile
-- `make install` - Nainštaluje aplikáciu do systému (vyžaduje sudo)
-- `make uninstall` - Odinštaluje aplikáciu zo systému (vyžaduje sudo)
+1. Rozbalte archív a vstúpte do priečinka `src/`.
+2. Nainštalujte závislosti: `make all`
+3. Spustite aplikáciu: `make run`
+4. Pre inštaláciu do systému: `sudo make install` (následne možno spustiť príkazom `Calculator_IVS` alebo cez menu aplikácií).
