@@ -98,9 +98,24 @@ theme_op = {"fg_color": "#D32F2F", "hover_color": "#F44336", "text_color": "whit
 theme_spec = {"fg_color": "#E0E0E0", "hover_color": "#FFFFFF", "text_color": "black", "font": font_button}
 
 
-display = ctk.CTkEntry(app, placeholder_text="0", justify="right", state="readonly", font=font_display, height=90, fg_color="#1e1e1e", border_color="#D32F2F")
-display.grid(row=0, column=0, columnspan=4, padx=10, pady=(20, 20), sticky="nsew")
+def auto_resize_font(*args):
+    text_length = len(display_var.get())
 
+    if text_length < 11:
+        display.configure(font=("Roboto", 55, "bold"))
+    elif text_length < 16:
+        display.configure(font=("Roboto", 40, "bold"))
+    elif text_length < 22:
+        display.configure(font=("Roboto", 30, "bold"))
+    else:
+        display.configure(font=("Roboto", 22, "bold"))
+
+
+display_var.trace_add("write", auto_resize_font)
+
+display = ctk.CTkEntry(app, textvariable=display_var, placeholder_text="0", justify="right", state="readonly",
+                       font=font_display, height=90, fg_color="#1e1e1e", border_color="#D32F2F")
+display.grid(row=0, column=0, columnspan=4, padx=10, pady=(20, 20), sticky="nsew")
 
 def key_pressed(event):
     """!
@@ -458,7 +473,7 @@ def button_factorial():
         except Exception:
             pass
 
-button = ctk.CTkButton(app, text="!", command=button_factorial, **theme_spec)
+button = ctk.CTkButton(app, text="n!", command=button_factorial, **theme_spec)
 button.grid(row=6, column=0, padx=5, pady=5, sticky="nsew")
 
 
