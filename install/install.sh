@@ -16,18 +16,52 @@ if [ $EUID -ne 0 ]; then
 fi
 
 #========================================
+#Check for py3
+#========================================
+if ! command -v python3 &>/dev/null; then
+	echo "python3 is not installed."
+
+	#Instalation suggestion python3
+	read -p "Install python3 now? (y/n): " choice
+	if [ "$choice" == "y" ]; then
+		apt update && apt install python3 -y
+	else
+		echo "Installation cancelled."
+		exit 1
+	fi
+fi
+
+#========================================
 #Checking pip
 #========================================
 if ! command -v pip3 &>/dev/null; then
 	apt update && apt install python3-pip -y
 fi
-python3 -m pip install customtkinter
+python3 -m pip install customtkinter --break-system-packages
 
 #========================================
-#Copy source
+#Check for tkinter
+#========================================
+if ! python3 -c "import tkinter" &>/dev/null; then
+	echo "Missing tkinter (python-tk) library."
+
+	#Instalation suggestion tkinter
+	read -p "Install tkinter now? (y/n): " choice
+	if [ "$choice" == "y" ]; then
+		apt install python3-tk -y
+	else
+		echo "Installaton cancelled."
+		exit 1
+	fi
+fi
+
+#========================================
+#Copy source and Uninstall script
 #========================================
 mkdir -p "$INSTALL_DIR"
 cp -r ../src/* "$INSTALL_DIR"
+cp ../install/uninstall.sh "$INSTALL_DIR/uninstall.sh"
+chmod +x "$INSTALL_DIR/uninstall.sh"
 
 #========================================
 #Copy assets (icon)
@@ -47,38 +81,6 @@ ln -s -f "$INSTALL_DIR/main.py" "$BIN_DIR/Calculator_IVS"
 #========================================
 chmod +x "$INSTALL_DIR/stddev.py"
 ln -s -f "$INSTALL_DIR/stddev.py" "$BIN_DIR/stddev"
-
-#========================================
-#Check for py3
-#========================================
-if ! command -v python3 &>/dev/null; then
-	echo "python3 is not installed."
-
-	#Instalation suggestion python3
-	read -p "Install python3 now? (y/n): " choice
-	if [ "$choice" == "y" ]; then
-		apt update && apt install python3 -y
-	else
-		echo "Installation cancelled."
-		exit 1
-	fi
-fi
-
-#========================================
-#Check for tkinter
-#========================================
-if ! python3 -c "import tkinter" &>/dev/null; then
-	echo "Missing tkinter (python-tk) library."
-
-	#Instalation suggestion tkinter
-	read -p "Install tkinter now? (y/n): " choice
-	if [ "$choice" == "y" ]; then
-		apt install python3-tk -y
-	else
-		echo "Installaton cancelled."
-		exit 1
-	fi
-fi
 
 #========================================
 #Desktop launcher and icon

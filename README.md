@@ -4,11 +4,11 @@
 
 ## Prostredi
 - Ubuntu 24.04 64bit (Primárne testovacie prostredie)
-- Fedora 43 (Vývojové prostredie)
+- Fedora 43, Windows 11, MacOS (Vývojové prostredie)
 
 #========================================
 ## Autori
-- Názov tímu: [Váš názov]
+- Názov tímu: [Absolute Zeros]
 - xluptam00 [Marek Lupták] (Vedúci, Infraštruktúra, Makefile, Inštalátor, Odinštalátor, Integrácia)
 - xlukott00 [Timotej Lukotka] (Matematická knižnica, Testy)
 - xheldim00 [Matúš Heldi] (Grafické rozhranie - GUI)

@@ -20,7 +20,8 @@ INSTALL_SRC = $(ROOT)/install
 #Default commands
 #========================================
 all:
-	$(PYTHON) -m pip install -r $(ROOT)/requirements.txt
+	@$(PYTHON) -m pip --version > /dev/null 2>&1 || (echo "Pip missing. Installing..." && sudo apt update && sudo apt install python3-pip -y)
+	$(PYTHON) -m pip install -r $(ROOT)/requirements.txt --break-system-packages
 
 #========================================
 run:
@@ -32,6 +33,7 @@ test:
 
 #========================================
 doc:
+	@command -v doxygen > /dev/null 2>&1 || (echo "Doxygen missing. Installing..." && sudo apt update && sudo apt install doxygen -y)
 	cd $(ROOT) && doxygen src/Doxyfile
 
 #========================================
@@ -41,7 +43,6 @@ stddev:
 #========================================
 clean:
 	rm -rf __pycache__
-	rm -rf $(SRC)/__pycache__
 	rm -rf $(ROOT)/doc
 	rm -rf $(ROOT)/$(LOGIN).zip
 	rm -rf $(ROOT)/$(LOGIN)

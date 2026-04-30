@@ -22,8 +22,9 @@ echo "Uninstall in progress..."
 #Uninstalling
 #========================================
 rm -rf "$INSTALL_DIR"
-rm -f "$BIN_DIR/Calculator_IVS" "$DESKTOP_FILE"
+rm -f "$BIN_DIR/stddev"
+rm -f "$BIN_DIR/Calculator_IVS"
+rm -f "$DESKTOP_FILE"
 #========================================
 
 echo "Calculator_IVS successfuly uninstalled."
-
