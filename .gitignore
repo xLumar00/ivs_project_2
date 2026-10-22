@@ -1,7 +1,28 @@
+# Compiled objects and binaries
 *.o
 *.out
+*.exe
 app_name
-profiling/vystup.*
-.DS_Store
+
+# Python byte-code and virtual environments
 __pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+
+# Build and submission artifacts
+*.zip
+doc/
+xluptam00*
+
+# Profiling and runtime logs
+profiling/vystup.*
 *numbers.txt
+*.log
+
+# OS / Editor artifacts
+.DS_Store
+*~
+*.swp
+*.swo
